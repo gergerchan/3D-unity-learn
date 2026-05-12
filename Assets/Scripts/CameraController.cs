@@ -7,7 +7,7 @@ using UnityEngine;
 /// The rotation NEVER changes — only the position tracks the player.
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// TEACHING POINT — The "Camera" in 3C (Isometric):
+/// 💡 CONCEPT: The "Camera" in 3C (Isometric)
 ///   Classic isometric angle: 45° horizontal, 35.26° vertical (true iso)
 ///   In Unity: Rotation X = 30~45°, Y = 45°, Z = 0
 ///
@@ -16,7 +16,7 @@ using UnityEngine;
 ///   • No motion sickness from camera spinning
 ///   • Perfect for top-down strategy / puzzle games (Stardew Valley, Hades)
 ///
-/// TEACHING POINT — LateUpdate vs Update:
+/// 💡 CONCEPT: LateUpdate vs Update
 ///   Camera MUST move in LateUpdate, AFTER the player has moved.
 ///   If you use Update, the camera jitters because player and camera
 ///   move in unpredictable order within the same frame.
@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float smoothSpeed = 8f;
 
     // Called every frame AFTER all Update() calls have run
-    private void Update()
+    private void LateUpdate()
     {
         if (target == null) return;
 

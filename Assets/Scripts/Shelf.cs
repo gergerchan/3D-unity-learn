@@ -9,7 +9,7 @@ using UnityEngine;
 /// When restocked, it fires a static event so GameManager can hear it.
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// TEACHING POINT — Static Events (Observer Pattern):
+/// 💡 CONCEPT: Static Events (Observer Pattern)
 ///   • Shelf doesn't know GameManager exists
 ///   • GameManager doesn't pull Shelf — Shelf pushes an event
 ///   • This "loose coupling" means we can add shelves without changing GameManager

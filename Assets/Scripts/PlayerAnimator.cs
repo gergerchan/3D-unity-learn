@@ -8,12 +8,12 @@ using UnityEngine.AI;
 /// When the agent is walking, velocity > 0. When stopped, velocity ≈ 0.
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// TEACHING POINT — Reading NavMeshAgent velocity:
+/// 💡 CONCEPT: Reading NavMeshAgent velocity
 ///   We don't control the movement directly anymore (NavMeshAgent does).
 ///   So we READ from the agent: "how fast are you actually moving?"
 ///   agent.velocity.magnitude → 0 = stopped, >0 = moving
 ///
-/// TEACHING POINT — Animator Parameter Hashes:
+/// 💡 CONCEPT: Animator Parameter Hashes
 ///   Animator.StringToHash("IsMoving") converts the name to an int ONCE.
 ///   Using the int is faster than re-evaluating the string every frame.
 /// ═══════════════════════════════════════════════════════════════

@@ -8,7 +8,7 @@ using UnityEngine;
 /// Updates ONLY when events fire — never checks state every frame.
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// TEACHING POINT — Event-driven UI vs Polling:
+/// 💡 CONCEPT: Event-driven UI vs Polling
 ///   BAD:  void Update() { progressText.text = gameManager.count; }
 ///   GOOD: Subscribe once, update only when something changes
 ///   This saves CPU and keeps UI code out of game logic.

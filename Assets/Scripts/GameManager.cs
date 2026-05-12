@@ -8,7 +8,7 @@ using UnityEngine;
 /// When the required number is hit, the game is won.
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// TEACHING POINT — Single Responsibility:
+/// 💡 CONCEPT: Single Responsibility
 ///   • GameManager only cares about WIN/LOSE logic
 ///   • It doesn't know what a shelf looks like
 ///   • It doesn't know how the player moves

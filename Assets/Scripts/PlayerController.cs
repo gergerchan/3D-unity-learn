@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 /// Tap a shelf     → agent walks to that shelf → PlayerInteraction restocks on arrival
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// COMMON SETUP MISTAKES:
+/// ⚠️ COMMON SETUP MISTAKES:
 ///   1. Player sinks underground → fix NavMeshAgent Base Offset (see Awake)
 ///   2. Shelf click does nothing → check shelfLayer mask + Shelf layer on collider
 ///   3. Ground click does nothing → check groundLayer mask + Ground layer on floor

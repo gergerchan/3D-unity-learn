@@ -9,7 +9,7 @@ using UnityEngine.AI;
 /// then triggers the restock.
 ///
 /// ═══════════════════════════════════════════════════════════════
-/// TEACHING POINT — Arrival Detection:
+/// 💡 CONCEPT: Arrival Detection
 ///   NavMeshAgent.remainingDistance = how far the agent still has to walk
 ///   NavMeshAgent.stoppingDistance  = how close it stops before the target
 ///   NavMeshAgent.pathPending        = true while Unity is still calculating the path
@@ -19,7 +19,7 @@ using UnityEngine.AI;
 ///     • remainingDistance ≤ stoppingDistance (we're close enough)
 ///   Only THEN do we restock — not when we just walk past!
 ///
-/// TEACHING POINT — Why separate from PlayerController?
+/// 💡 CONCEPT: Why separate this from PlayerController?
 ///   Single Responsibility Principle:
 ///   Controller = "where does the player go?"
 ///   Interaction = "what happens when the player gets there?"
