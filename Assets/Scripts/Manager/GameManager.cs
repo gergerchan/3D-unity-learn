@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -20,13 +21,18 @@ public class GameManager : MonoBehaviour
     [Header("Win Condition")]
     [Tooltip("How many shelves must be restocked to win? (1/3 of total is the goal)")]
     [SerializeField] private int shelvesRequiredToWin = 3;
-
+    public static GameManager Instance { get; private set; }
     // ── Event — HUDController and others listen to this ───────────────────
     public static event Action<int, int> OnProgressChanged;  // (restocked, required)
     public static event Action OnGameWon;
+    private List<int> _restockedShelfIds = new List<int>();
+
 
     private int _restockedCount = 0;
     private bool _gameWon = false;
+    public int RestockedCount => _restockedCount;
+    public List<int> RestockedShelfIds => _restockedShelfIds;
+
 
     private void OnEnable()
     {
@@ -40,18 +46,32 @@ public class GameManager : MonoBehaviour
         Shelf.OnShelfRestocked -= HandleShelfRestocked;
     }
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+    }
+
     private void Start()
     {
         // Broadcast starting state to UI
         OnProgressChanged?.Invoke(_restockedCount, shelvesRequiredToWin);
     }
 
+    public void RestoreCount(int count, List<int> shelfIds)
+    {
+        _restockedCount = count;
+        _restockedShelfIds = new List<int>(shelfIds);  
+        OnProgressChanged?.Invoke(_restockedCount, shelvesRequiredToWin);
+    }
+
     // Called every time any Shelf fires OnShelfRestocked
-    private void HandleShelfRestocked()
+    private void HandleShelfRestocked(int shelfId)
     {
         if (_gameWon) return;   // Don't count after the game is won
 
         _restockedCount++;
+        _restockedShelfIds.Add(shelfId);
         OnProgressChanged?.Invoke(_restockedCount, shelvesRequiredToWin);
 
         if (_restockedCount >= shelvesRequiredToWin)

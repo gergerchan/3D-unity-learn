@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// HUD Controller
@@ -28,6 +29,8 @@ public class HUDController : MonoBehaviour
     [Tooltip("The win panel — hidden at start, shown on game win")]
     [SerializeField] private GameObject winPanel;
 
+    [Tooltip("TextMeshPro text showing total win count on the win screen")]
+    [SerializeField] private TextMeshProUGUI winScoreText;
     private void OnEnable()
     {
         GameManager.OnProgressChanged += HandleProgressChanged;
@@ -58,6 +61,22 @@ public class HUDController : MonoBehaviour
     private void HandleGameWon()
     {
         if (winPanel != null) winPanel.SetActive(true);
+
+        // PlayerPrefs already updated by DataManager — safe to read here
+        if (winScoreText != null)
+        {
+            int totalWins = PlayerPrefs.GetInt("TotalWin", 0);
+            winScoreText.text = $"Total Wins: {totalWins}";
+        }
+    }
+
+    /// <summary>
+    /// Called by the Restart Button's OnClick in the Inspector.
+    /// Reloads the active scene to restart the game.
+    /// </summary>
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     /// <summary>

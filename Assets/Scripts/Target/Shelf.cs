@@ -28,18 +28,32 @@ public class Shelf : MonoBehaviour
     [Tooltip("Drag the 'empty shelf' child GameObject here (optional highlight)")]
     [SerializeField] private GameObject emptyShelfVisual;
 
+    [Header("Identity")]
+    [Tooltip("Unique index for this shelf — set manually in Inspector (0, 1, 2...)")]
+    [SerializeField] private int shelfIndex;
+
+    public int ShelfIndex => shelfIndex;
+
+    // Change line 56 from GetInstanceID() to shelfIndex:
+
+
     // ── Static event — GameManager listens to this ─────────────────────────
     // "static" means ALL Shelves share one event channel
-    public static event Action OnShelfRestocked;
+    public static event Action<int> OnShelfRestocked;
 
     // Is this shelf currently empty and needing to be restocked?
     public bool IsEmpty { get; private set; }
-
+    private bool _isRestored = false;
     // Unity calls this before the first frame
     private void Start()
     {
-        IsEmpty = startsEmpty;
-        UpdateVisuals();
+
+        if (!_isRestored)
+        {
+            IsEmpty = startsEmpty;
+            UpdateVisuals();
+        }
+
     }
 
     /// <summary>
@@ -53,7 +67,7 @@ public class Shelf : MonoBehaviour
         UpdateVisuals();
 
         // Fire the event — GameManager will count this
-        OnShelfRestocked?.Invoke();
+        OnShelfRestocked?.Invoke(shelfIndex);
     }
 
     // Show/hide the correct GameObjects based on state
@@ -64,6 +78,13 @@ public class Shelf : MonoBehaviour
 
         if (emptyShelfVisual != null)
             emptyShelfVisual.SetActive(IsEmpty);    // Show when empty
+    }
+
+    public void RestoreState(bool wasRestocked)
+    {
+        _isRestored = true;            // ← mark as restored BEFORE Start() can run
+        IsEmpty = !wasRestocked;
+        UpdateVisuals();
     }
 
     // Draw a colored wire sphere in Scene view so designers can see the shelf state
